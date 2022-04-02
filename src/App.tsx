@@ -9,6 +9,7 @@ const App: FC = () => {
   const [todoList, setTodoList] = useState<ITask[]>([]);
 
   const handleChange = (event: ChangeEvent<HTMLInputElement>): void => {
+   
     if (event.target.name === "task") {
       setTask(event.target.value);
     } else {
@@ -17,10 +18,12 @@ const App: FC = () => {
   };
 
   const addTask = (): void => {
-    const newTask = { taskName: task, deadline: deadline };
-    setTodoList([...todoList, newTask]);
-    setTask("");
-    setDealine(0);
+    if(task){
+      const newTask = { taskName: task, deadline: deadline };
+      setTodoList([...todoList, newTask]);
+      setTask("");
+      setDealine(0);
+    }
   };
 
   const completeTask = (taskNameToDelete: string): void => {
@@ -48,6 +51,8 @@ const App: FC = () => {
             name="deadline"
             value={deadline}
             onChange={handleChange}
+            min={0}
+            max={30}
           />
         </div>
         <button onClick={addTask}>Add Task</button>
